@@ -6,7 +6,7 @@ import {
     onMounted,
 } from "vue";
 
-import { from, Observable } from "rxjs";
+import { from, /*Observable*/ } from "rxjs";
 import { share  } from "rxjs/operators";
 
 interface LibConfig {
@@ -34,7 +34,7 @@ const props = defineProps({
         type: Object,
         required: true,
         validator: function (value: MapInitOptions) {
-            let res = false
+            // let res = false
             if (value?.cesium.js?.length > 0 &&
                 value?.cesium.css?.length > 0 &&
                 value?.proj4?.length > 0 &&
@@ -59,13 +59,13 @@ function loadLibrary(): undefined | Promise<any> {
     if ((window as any).Cesium) {
         return;
     }
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
         Promise.all([
             importCesiumJs(),
             importCesiumCss(),
             importProj4Js(),
             importEngineCss()
-        ]).then(res => {
+        ]).then(() => {
             importEngineJs().then(() => {
                 // (window as any).Cesium = res[0];
                 // 这一行不能少，否则（由于是ts，因此，参数不能为空，传递一个undefined），
@@ -99,7 +99,7 @@ function importCesiumCss() {
     linkEl.rel = "stylesheet";
     linkEl.href = cesiumCssUrl;
     document.body.appendChild(linkEl);
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
         linkEl.onload = () => {
             resolve(linkEl);
         };
@@ -146,7 +146,7 @@ function importEngineCss() {
     linkEl.rel = "stylesheet";
     linkEl.href = engineCssUrl;
     document.body.appendChild(linkEl);
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
         linkEl.onload = () => {
             resolve(linkEl);
         };

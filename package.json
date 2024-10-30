@@ -5,26 +5,23 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "tauri": "tauri"
   },
   "dependencies": {
     "pinia": "^2.2.4",
     "rxjs": "^7.8.1",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-shell": "^2"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.16.11",
     "@vitejs/plugin-vue": "^5.1.4",
-    "@vitejs/plugin-vue-jsx": "^4.0.1",
-    "@vue/tsconfig": "^0.5.1",
-    "npm-run-all2": "^6.2.3",
-    "typescript": "~5.5.4",
-    "vite": "^5.4.8",
-    "vue-tsc": "^2.1.6"
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.22",
+    "@tauri-apps/cli": "^2"
   }
 }

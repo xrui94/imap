@@ -2,36 +2,49 @@
 import GisMap from '../components/GisMap.vue'
 
 import { ref } from 'vue'
+import { invoke } from "@tauri-apps/api/core";
 
 const mapId = ref('home-map')
 const mapOptions = ref((window as any).systemConfig)
 
-function openFile() {
+async function openFile() {
   // https://www.jianshu.com/p/646bb18d1739
   // https://blog.csdn.net/u014324940/article/details/132980242
 
-  fetch(
-    // encodeURI('http://localhost:1027/open?file=D:/xrui94/data/engine/models/osgb/西安大雁塔/DaYanTa_3DTiles1.0/tileset.json'),   // 中文字符,后端暂不支持
-    encodeURI('http://localhost:1027/filepath'),
-    {
-      mode: 'no-cors'
-    }
-  )
-  .then(res => {
-    if (!res.ok) {
-      console.error('Failed to request file.');
-      return;
-    }
-    return res.text();
-  })
-  .then(res => {
-    // console.log(mapId.value) 如下函数中,使用"mapId.value"时报错!!?
-    (window as any).REngine.getMap('home-map').addLayer({
-      type: '3DTILES',
-      url: res
-    })
-  })
+  // fetch(
+  //   // encodeURI('http://localhost:1027/open?file=D:/xrui94/data/engine/models/osgb/西安大雁塔/DaYanTa_3DTiles1.0/tileset.json'),   // 中文字符,后端暂不支持
+  //   encodeURI('http://localhost:1027/filepath'),
+  //   {
+  //     mode: 'no-cors'
+  //   }
+  // )
+  // .then(res => {
+  //   if (!res.ok) {
+  //     console.error('Failed to request file.');
+  //     return;
+  //   }
+  //   return res.text();
+  // })
+  // .then(res => {
+  //   // console.log(mapId.value) 如下函数中,使用"mapId.value"时报错!!?
+  //   (window as any).REngine.getMap('home-map').addLayer({
+  //     type: '3DTILES',
+  //     url: res
+  //   })
+  // })
+
+  // // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+  // const res = await invoke("openfile", { name: name.value });
+  // // console.log(mapId.value) 如下函数中,使用"mapId.value"时报错!!?
+  // (window as any).REngine.getMap('home-map').addLayer({
+  //   type: '3DTILES',
+  //   url: res
+  // })
+
+  console.log(await invoke("greet", { name: '你好吖~'  }));
 }
+
+
 
 </script>
 
